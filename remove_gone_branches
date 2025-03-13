@@ -1,0 +1,5 @@
+
+# Update remote references, pruning any branches no longer existing on the remote
+git fetch --prune
+# Identify and delete local branches that no longer exist on remote (remote branches won't be affected)
+git branch -vv | grep 'gone]' | awk '{print $1}' | xargs git branch -D

@@ -1,0 +1,88 @@
+<style>
+  *{font-family:arial;}
+table
+{
+ width:80%;
+ margin:auto;
+ border:1px solid silver;
+}
+
+thead > tr > td
+{
+ font-weight:bold;
+ text-align:center;
+ background-color:aqua;
+}
+</style>
+<script>
+function wordPairCount(word)
+{
+ var i,rslt = [],len = word.length - 1;
+ for(i=0;i < len;i++) rslt.push(word.substr(i,2));
+ if (2 == len) rslt.push(word[0] + word[len]);
+ return rslt;
+}
+
+function pairCount(arr)
+{
+ var i,rslt = [];
+ arr = arr.toLowerCase().split(' ');
+ for(i=0;i < arr.length;i++) rslt = rslt.concat(wordPairCount(arr[i]));
+ return rslt;
+}
+
+function commonCount(a,b)
+{
+ var t;
+ if (b.length > a.length) t = b, b = a, a = t; 
+ t = a.filter(function (e){return b.indexOf(e) > -1;});
+ return t.length;
+}
+
+function myDice(a,b)
+{
+ var bigrams = [],
+ aPairs = pairCount(a),
+ bPairs = pairCount(b);
+ debugger;
+ var isct = commonCount(aPairs,bPairs);
+ return 2*commonCount(aPairs,bPairs)/(aPairs.length + bPairs.length); 
+}
+
+$('#rslt1').text(myDice('WEB Applications','PHP Web Application'));
+$('#rslt2').text(myDice('And','Dan'));
+$('#rslt3').text(myDice('and','aMd'));
+$('#rslt4').text(myDice('abracadabra','abracabadra'));
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<table>
+<thead>
+<tr>
+<td>Phrase 1</td>
+<td>Phrase 2</td>
+<td>Dice</td>
+</tr>
+<thead>
+<tbody>
+<tr>
+<td>WEB Applications</td>
+<td>PHP Web Application</td>
+<td id='rslt1'></td>
+</tr>
+<tr>
+<td>And</td>
+<td>Dan</td>
+<td id='rslt2'></td>
+</tr>
+<tr>
+<td>and</td>
+<td>aMd</td>
+<td id='rslt3'></td>
+</tr>
+<tr>
+<td>abracadabra</td>
+<td>abracabadra</td>
+<td id='rslt4'></td>
+</tr>
+</tbody>
+</table>
